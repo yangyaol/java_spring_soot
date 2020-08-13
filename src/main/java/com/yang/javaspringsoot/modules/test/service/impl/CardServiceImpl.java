@@ -6,6 +6,7 @@ import com.yang.javaspringsoot.modules.test.repository.CardRepository;
 import com.yang.javaspringsoot.modules.test.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author:
@@ -18,6 +19,7 @@ public class CardServiceImpl implements CardService {
     private CardRepository cardRepository;
 
     @Override
+    @Transactional
     public Result<Card> insertCard(Card card) {
         cardRepository.saveAndFlush(card);
         return new Result<Card>(Result.ResultStatus.SUCCESS.status,"insert succer",card);
