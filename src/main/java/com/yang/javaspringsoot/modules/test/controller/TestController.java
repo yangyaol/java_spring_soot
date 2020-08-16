@@ -74,5 +74,13 @@ public class TestController {
     public String testDesc() {
         return "This is test module desc.";
     }
+
+    /*
+    127.0.0.1/test/index
+     */
+    @GetMapping("/index")
+    public String testIndexPage(){
+        return "index";
+    }
 }
 
