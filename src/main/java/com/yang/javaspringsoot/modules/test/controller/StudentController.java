@@ -6,6 +6,7 @@ import com.yang.javaspringsoot.modules.test.entity.Student;
 import com.yang.javaspringsoot.modules.test.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+
+
 
     /**
      * 127.0.0.1/api/insertStudent   ---post
@@ -78,5 +81,7 @@ public class StudentController {
 
         return studentService.findStudentByParams(studentName,cardId);
     }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.yang.javaspringsoot.modules.test.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yang.javaspringsoot.aspect.ServiceAnnotation;
 import com.yang.javaspringsoot.modules.common.vo.Result;
 import com.yang.javaspringsoot.modules.common.vo.SearchVo;
 import com.yang.javaspringsoot.modules.test.dao.CityDao;
@@ -22,6 +23,7 @@ public class CityServiceImpl implements CityService {
     private CityDao cityDao;
 
     @Override
+    @ServiceAnnotation
     public List<City> getCitiesByCountryId(int countryId) {
 //        return cityDao.getCitiesByCountryId(countryId);
 
