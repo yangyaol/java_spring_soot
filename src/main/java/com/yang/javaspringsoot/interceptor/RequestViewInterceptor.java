@@ -40,14 +40,15 @@ public class RequestViewInterceptor implements HandlerInterceptor {
             if (path.startsWith("/")){
                 path = path.substring(1);
             }
-            modelAndView.getModelMap().addAttribute("template");
-//            System.out.printf("modelAndView.getModelMap().addAttribute(\"template\");");
-        }
+            modelAndView.getModelMap().addAttribute("template",path.toLowerCase());
 
+        }
+        HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         LOGGER.debug("==== after interceptor ====");
+        HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

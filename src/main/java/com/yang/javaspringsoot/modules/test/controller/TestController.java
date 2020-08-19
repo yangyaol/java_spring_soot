@@ -9,14 +9,21 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +50,103 @@ public class TestController {
     private CityService cityService;
     @Autowired
     private CountryService countryService;
+
+    /**
+     * 127.0.0.1/test/indexSimple ---- get
+     */
+    @GetMapping("/indexSimple")
+    public String indexSimpleTestPage() {
+        return "indexSimple";
+    }
+
+    /**
+     * 127.0.0.1/test/downloadFile ---- get
+     */
+    @GetMapping("/downloadFile")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String fileName) {
+        Resource resource = null;
+        try {
+            resource = new UrlResource(
+                    Paths.get("D:\\Upload\\" + fileName).toUri());
+            if (resource.exists() && resource.isReadable()) {
+                return ResponseEntity
+                        .ok()
+                        .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")
+                        .header(HttpHeaders.CONTENT_DISPOSITION,
+                                String.format("attachment; filename=\"%s\"", resource.getFilename()))
+                        .body(resource);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
+    /**
+     * 127.0.0.1/test/files ---- post
+     */
+    @PostMapping(value = "/files",consumes = "multipart/form-data")
+    public String uploadFiles(@RequestParam MultipartFile[] files,
+                              RedirectAttributes redirectAttributes){
+        boolean empty=true;
+        try {
+            for (MultipartFile file : files){
+                if (file.isEmpty()){
+                    continue;
+                }
+                String destFilePath = "D:\\Upload\\" + file.getOriginalFilename();
+                File destFile = new File(destFilePath);
+                file.transferTo(destFile);
+                empty = false;
+            }
+
+            if (empty){
+                redirectAttributes.addAttribute(
+                        "message","Please select file..");
+            }else {
+                redirectAttributes.addAttribute(
+                        "message","Upload file success.");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute(
+                    "message", "Upload file failed.");
+        }
+
+        return "redirect:/test/index";
+    }
+
+    /**
+     * 127.0.0.1/test/file    ======post===
+     * @param file
+     * @param redirectAttributes
+     * @return
+     * @throws IOException
+     */
+    @PostMapping(value = "/file", consumes = "multipart/form-data")
+    public String uploadFile(@RequestParam MultipartFile file,
+                             RedirectAttributes redirectAttributes) throws IOException {
+            if (file.isEmpty()){
+                redirectAttributes.addAttribute("message","Please select file");
+                return "redirect:/test/index";
+            }
+        try {
+            String destFilePath = "D:\\Upload\\" + file.getOriginalFilename();
+            File destFile = new File(destFilePath);
+            file.transferTo(destFile);
+            redirectAttributes.addAttribute("message","Upload file success.");
+        }catch (IOException e){
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute(
+                    "message", "Upload file failed.");
+        }
+
+        return "redirect:/test/index";
+    }
+
     /**
      * 127.0.0.1:8085/test/logTest ---- get
      */
@@ -113,7 +217,6 @@ public class TestController {
         modelMap.addAttribute("country",country);
         modelMap.addAttribute("cities",cities);
         modelMap.addAttribute("updateCityUri","/api/city");
-//      modelMap.addAttribute("template","test/index");
 
         return "index";
     }
