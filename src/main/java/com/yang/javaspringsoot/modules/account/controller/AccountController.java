@@ -34,13 +34,20 @@ public class AccountController {
     }
 
     /**
-     * 127.0.0.1/account/user     ==get
+     * 127.0.0.1/account/users     ==get
      * @return
      */
-    @GetMapping("/user")
+    @GetMapping("/users")
     public String userPage(){
         return "index";
     }
 
 
+    /**
+     * 127.0.0.1/account/profile ---- get
+     */
+    @GetMapping("/profile")
+    public String profilePage(){
+        return "index";
+    }
 }
