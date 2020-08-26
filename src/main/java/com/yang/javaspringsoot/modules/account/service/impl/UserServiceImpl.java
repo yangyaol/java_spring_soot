@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
         Subject subject = SecurityUtils.getSubject();
 
         UsernamePasswordToken usernamePasswordToken =
-                new UsernamePasswordToken(user.getUserName(),
+                new UsernamePasswordToken(user.getAccountName(),
                         MD5Util.getMD5(user.getPassword()));
         usernamePasswordToken.setRememberMe(user.getRememberMe());
 
