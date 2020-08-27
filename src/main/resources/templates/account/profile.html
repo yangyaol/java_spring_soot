@@ -57,7 +57,10 @@
                                          title="Change the avatar" style="width: 220px; height: 220px;">
                                 </div>
                             </div>
-                            <h3 name="userNameH3">Samuel Doe</h3>
+                            <h3 name="userNameH3">
+                                <span shiro:principal property="userName"/>
+                                <input type="hidden" id="userId" th:value="${session.user.userId}">
+                            </h3>
 
                             <ul class="list-unstyled user_data">
                                 <li><i class="fa fa-map-marker user-profile-icon"></i> San
@@ -336,7 +339,7 @@
     $(document).ready(function() {
         initFileInput();
 
-        initUserProfile(2);
+        initUserProfile($("#userId").val());
 
         $("#editProfile").bind("click", function(){
             editProfile();
@@ -350,7 +353,6 @@
             type : "get",
             contentType: "application/json",
             success : function (rs) {
-                console.log(rs)
                 $("[name='userId']").val(rs.userId);
                 $("[name='userName']").val(rs.userName);
                 if (rs.userImg == null) {

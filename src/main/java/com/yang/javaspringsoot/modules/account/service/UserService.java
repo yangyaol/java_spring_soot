@@ -28,4 +28,5 @@ public interface UserService {
 
     User getUserByUserName(String userName);
 
+    void logout();
 }

@@ -131,36 +131,35 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<String> uploadUserImg(MultipartFile file){
-        if (file.isEmpty()){
+        if (file.isEmpty()) {
             return new Result<String>(
-                    Result.ResultStatus.FAILD.status,"Please select img.");
-
+                    Result.ResultStatus.FAILD.status, "Please select img.");
         }
+
         String relativePath = "";
         String destFilePath = "";
-
         try {
             String osName = System.getProperty("os.name");
-            if (osName.toLowerCase().startsWith("win")){
+            if (osName.toLowerCase().startsWith("win")) {
                 destFilePath = resourceConfigBean.getLocationPathForWindows() +
                         file.getOriginalFilename();
-            }else {
-                destFilePath = resourceConfigBean.getLocationPathForLinux() +
-                        file.getOriginalFilename();
+            } else {
+                destFilePath = resourceConfigBean.getLocationPathForLinux()
+                        + file.getOriginalFilename();
             }
-
             relativePath = resourceConfigBean.getRelativePath() +
                     file.getOriginalFilename();
             File destFile = new File(destFilePath);
             file.transferTo(destFile);
-        }catch (IOException e){
-            e.printStackTrace();
-            return new Result<String>(Result.ResultStatus.FAILD.status,
-                    "Upload failed.");
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Result<String>(
+                    Result.ResultStatus.FAILD.status, "Upload failed.");
         }
-        return new Result<String>(Result.ResultStatus.SUCCESS.status,
-                "Upload success.", relativePath);
+
+        return new Result<String>(
+                Result.ResultStatus.SUCCESS.status, "Upload success.", relativePath);
     }
 
     @Override
@@ -177,5 +176,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
+    }
+
+    @Override
+    public void logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        Session session =subject.getSession();
+        session.setAttribute("user", null);
     }
 }
