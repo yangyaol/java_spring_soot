@@ -1,0 +1,135 @@
+﻿一、选择题（共12小题，每小题2.5分，共30分）
+	以下不是spring boot优点的是 ( D)
+		A．快速搭建项目
+		B．简化配置  
+		C．自动配置  
+		D．无需容器
+	Spring Boot配置，以下哪个优先级最高（A）
+		A、外置：xx.jar同目录下/config/application.properties；
+		B、外置：xx.jar同目录下/config/application.yml；
+		C、内置：src/main/resources/config；
+		D、内置：src/main/resources
+	以下log日志级别哪个最高（D）
+		A、DEBUG
+		B、INFO
+		C、WARN
+		D、ERROR
+	以下不是spring boot的核心注解的是 ( A )
+		A.	@SpringBootConfiguration
+		B.	@EnableAutoConfiguration
+		C.	@ComponentScan
+		D.	@MapperScan
+	要使用springMVC的功能，需要导入那个包 (C  )
+		A．spring-boot-starter-jdbc  
+		B．spring-boot-starter-thymeleaf  
+		C．spring-boot-starter-web  
+		D．mybatis-spring-boot-starter
+	以下哪个注解不能加在类上 (D  )
+		A.	@Controller
+		B.	@ResponseBody
+		C.	@RestController
+		D.	@RequestMapping
+	当控制层上有@RestController注解时，方法中返回一个字符串“<h1>Hello</h1>”，浏览器调用的结果是 ( D )
+		A. 一级标题显示的Hello
+		B.	找不到Hello.html
+		C.	<h1>Hello</>
+		D.	Hello
+	SpringBoot项目中配置文件的格式 ( C )
+		A．properties  
+		B．yml  
+		C．两者都可以
+	不是SpringBoot核心配置文件是（A）
+		A.	bootstrap
+		B.	application
+		C.	application-dev
+	前台使用json参数格式，控制器consumer、参数使用的注解是（A）
+		A、application/josn ---- @RequestBody
+		B、application/josn ---- @ModelAttribute
+		C、application/x-www-form-urlencoded ---- @RequestBody
+		D、application/x-www-form-urlencoded ---- @ModelAttribute
+	@Pointcut("execution(public * com.thornBird.sbd.modules.*.controller.*.*(..))")，第三个*代表（C）
+		A、代表返回类型不限
+		B、代表module下所有子包
+		C、代表所有类
+		D、代表所有方法
+	Url匹配风格中/admin*，以下哪个匹配不正确（A）
+		A、/admin
+		B、/admin1
+		C、/admin123
+		D、/admin/1
+	Mybatis框架中，插入数据使用那个注解（B）
+		A、@Update
+		B、@Insert
+		C、@Select
+		D、@InsertMapping
+
+二、填空题（共5小题，每小题5分，共25分）
+	获取配置文件的属性值，使用哪个注解_______@Value_________；
+	Java配置依赖的2个注解是__@Autowired________，_____@Resource______;
+	Spring Boot修改tomcat端口号为9090应该怎么写？__server.port=9090_______;
+	自定义拦截器需要实现__HandlerInterceptor接口；
+	过滤器需要使用___WebFilter___注解;
+	上传文件，使用____接收文件对象，consumer使用__multipart/form-data___;
+
+三、问答题（每题5分，共25分）
+	阐述 Spring Boot 特性，举一个例子来解释 Staters 的内容；
+	快速开发；
+	pom，以 starter 形式，按照组类聚了多个jar，形成单条依赖，以父子继承的方式，实现 jar 版本的控制；
+	“习惯优于配置”，简化了配置，没有web.xml
+	注解开发
+	内嵌式的servlet容器，无需外置容器
+	监控的方便性
+	 <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.16.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+        </parent>	
+
+	Mybatis传参中，#{*}、${*}的区别？
+		#{*} = ‘*’#能防止sql注入，会默认有引号
+		${*} = *  $不能防止sql注入
+
+	简述Restful规则？
+	1.协议   2.域名  3.版本	4.路径	5.Http动词  6.过滤信息	7.状态码   8.错误处理
+	9.返回结果   10.Hypermedia API	11.其他
+
+	简述Git使用流程，写几个常用Git命令？
+	注册并登陆，创建一个自己仓库。 
+	下载最新的Git客户端，在Eclipse或IDEA配置相关属性，如仓库地址，账户密码等。
+	然后就可以上传或者下载GitHub上的项目了
+
+	git add git push  git pull git revert  
+	
+	简述shiro两大功能实现流程；
+	首先创建一个Myrealm类 ，继承AuthorizingRealm的两个方法，授权和认证，
+	用户验证   包装令牌  -subject调用realm，通过身份验证和令牌做比对。
+	用户授权   查询用户拥有的角色资源  通过在页面查看shiro标签，还有方法上的注解，调用realm资源授权器， 通过比对，给用户查看自己所拥有的资源	
+
+四、编程题（每题10分，共20分）
+	1、提供一个接口，返回 List<User> 列表，对该列表进行排序、保留10条数据；页面端使用 ajax post 方式提交请求，包装查询参数，获取接口返回数据，并遍历数据渲染到页面上 table 表格中；
+	
+	 @Select("<script>" +
+            "select * from user "
+            + "<where> "
+            + "<if test='keyWord != \"\" and keyWord != null'>"
+            + " and user_id like '%${keyWord}%') "
+            + "</if>"
+            + "</where>"
+            + "<choose>"
+            + "<otherwise>"
+            + " order by user_id desc"
+	    +" limit 10"
+            + "</otherwise>"
+            + "</choose>"
+            + "</script>")
+	List<User> getUserByid(int userId);
+	
+	&.ajax({
+		url : "/api/users",
+                    type : "post",
+                    contentType: "application/json",
+                    	
+		})
+	
+	2、设计一套购物车接口，以 Cookie 或者 redis 实现
