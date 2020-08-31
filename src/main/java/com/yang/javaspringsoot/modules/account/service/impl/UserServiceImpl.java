@@ -167,7 +167,7 @@ public class UserServiceImpl implements UserService {
     public Result<User> updateUserProfile(User user) {
         User userTemp = userDao.getUserByUserName(user.getUserName());
         if (userTemp != null && userTemp.getUserId() != user.getUserId()){
-            return new Result<User>(Result.ResultStatus.FAILD.status, "User name is repeat.");
+            return new Result<User>(Result.ResultStatus.FAILD.status, "Edit failed!!");
         }
         userDao.updateUser(user);
         return new Result<User>(Result.ResultStatus.SUCCESS.status, "Edit success.", user);

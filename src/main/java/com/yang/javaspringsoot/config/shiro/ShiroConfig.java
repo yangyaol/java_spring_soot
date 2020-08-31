@@ -71,7 +71,7 @@ public class ShiroConfig {
         map.put("/static/**", "anon");
         map.put("/js/**", "anon");
         map.put("/css/**", "anon");
-        map.put("/plugin/**", "anon");
+        map.put("/vendors/**", "anon");
         map.put("/account/login", "anon");
         map.put("/api/login", "anon");
         map.put("/account/register", "anon");
@@ -80,7 +80,7 @@ public class ShiroConfig {
 
         map.put("/common/**", "user");
         map.put("/test/**", "user");
-//        map.put("/**", "authc");
+        map.put("/**", "user");
 
         shiroFilter.setFilterChainDefinitionMap(map);
 
