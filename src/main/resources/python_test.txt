@@ -1,0 +1,114 @@
+﻿一，选择题
+	以下哪个不是python解释器  B
+		CPython
+		IPython
+		Jython
+		py
+	下列哪个表达式在Python中是非法的？ C
+		x = y = z = 1
+		x = (y = z + 1)
+		x, y = y, x
+		x += y
+	print("%d %% %d"%(3, 5)) 输出结果是？ A
+		3 % 5
+		3 %% 5
+		2
+		1
+	“今年第一季度GDP提高了x%”，x为float值，格式化字符串，x保留两位小数，下面哪个是正确的？ C
+		print("今年第一季度GDP提高了%.2f"%(22.234,))
+		print("今年第一季度GDP提高了%.2f%"%(22.234,))
+		print("今年第一季度GDP提高了%.2f%%"%(22.234,))
+		print("今年第一季度GDP提高了{0}%".format(22.234))
+	l = ["cdsa", 32, 33.2, None, True];l.pop();print(l);打印结果是：C
+		["cdsa", 32, 33.2, True]
+		["cdsa", 32, None, True]
+		["cdsa", 32, 33.2, None]
+		[32, 33.2, None, True] B
+	print(15 // 2);
+		1
+		7
+		7.5
+		8
+	下面哪个不是 python 的数据类型 D
+		int
+		str
+		set
+		double
+	*args 代表什么参数 B
+		位置参数
+		可变参数
+		可变关键字参数
+		命名关键字参数
+	函数多个返回值，实际上返回的是什么数据类型？A
+		list
+		set
+		tuple
+		dict
+	安装Django2.0.7版本，使用的什么命令？ C
+		pip install django
+		pip install django=2.0.7
+		pip install django==2.0.7
+		pip install django version=2.0.7
+
+二、填空题
+	字符串前面添加u、r、b分别代表什么？
+	U 表示Unicode字符串，针对任何字符串，进行Unicode编码
+	R 非转义字符串，常用语正则表达式，对应re模块
+	B bytes 
+	
+	requests模块请求远程服务器，如何设置相应编码？
+	import requests
+	r = requests.get(url)
+	r.encoding = "utf-8"
+	
+	windows下执行python的方式；
+	创建python package，会自动生成什么文件？
+	__init__.py  ，	
+
+
+	python变量作用域有哪些？
+	python中的作用域分4种情况： L：local，局部作用域，即函数中定义的变量；
+E：enclosing，嵌套的父级函数的局部作用域，即包含此函数的上级函数的局部作用域，但不是全局的；
+G：globa，全局变量，就是模块级别定义的变量； B：built-in，系统固定模块里面的变量，比如int, bytearray等。 搜索变量的优先级顺序依次是：作用域局部>外层作用域>当前模块中的全局>python内置作用域，也就是LEGB。
+
+三、问答题
+	python命名规则？
+	由字母、数字、下划线组成，不能以数字开头。
+	区分大小写
+	不能与关键字重名
+
+	set删除操作中，pop、remove的区别？
+	pop默认删除最后一个，可以没有下标，指定元素
+	remove必须有下标，不然报错。
+	
+	
+	list使用+=和append函数的区别？
+	在循环时使用+=会创建多个StringBuilder对象，而使用append()，只会创建一个。
+	不要再循环中使用+=操作，效率很低。
+
+	使用bs4解析响应内容，获取某div（class为aaa）下所有span节点；
+	bs = BeautifulSoup(r.text, "html.parser");
+    	li_list = bs.find(name="div", attrs={"class": ""}).find_all('span');
+    	
+	
+	简述Django操作流程、组件的作用；
+	创建项目  注册子应用  配置path  配置页面路径 发送请求
+
+
+四、编程题
+	定义一个函数，接受 0 个或多个参数，返回累计乘积；
+	def sy(*num):
+		n = 1
+		for x in num:
+			n *= x
+		return n
+
+
+
+	定义一个函数，去掉字符串前后的空格；
+	import re;
+	str = '  2014-04-21 14:10:18  '
+	str2 = str.strip()
+	str3 = re.sub(' ', '', str)
+	print(str2);
+	print(str3);
